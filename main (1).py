@@ -1,5 +1,5 @@
 import math
-
+import keyboard
 import pygame
 import random
 import sys
@@ -11,6 +11,8 @@ screen = pygame.display.set_mode((800, 600))
 play_button_img = pygame.image.load('start.png')
 quit_button_img = pygame.image.load('exit.png')
 options_button = pygame.image.load('option.png')
+
+
 
 def move_player(player_rect, speed):
     mouse_pos = pygame.mouse.get_pos()
@@ -46,6 +48,8 @@ def game_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if keyboard.is_pressed('esc'):
+                main_menu()
 
         screen.fill(desert_color)
 
@@ -90,16 +94,21 @@ def main_menu():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                play_button_rect = play_button_img.get_rect(topleft=(310, 300))
-                quit_button_rect = quit_button_img.get_rect(topleft=(300, 430))
-                options_button_rect = options_button.get_rect(topleft=(280, 360))
+                play_button_rect = play_button_img.get_rect(topleft=(230, 10))
+                options_button_rect = options_button.get_rect(topleft=(10, 180))
+                quit_button_rect = quit_button_img.get_rect(topleft=(180, 350))
                 if play_button_rect.collidepoint(mouse_pos):
                     game_screen()
+                if quit_button_rect.collidepoint(mouse_pos):
+                    pygame.quit()
+                    sys.exit()
+            if keyboard.is_pressed('esc'):
+                return
 
         screen.fill((255, 255, 255))
-        screen.blit(play_button_img, (310, 300))
-        screen.blit(quit_button_img, (300, 430))
-        screen.blit(options_button, (280, 360))
+        screen.blit(play_button_img, (230, 10))
+        screen.blit(options_button, (10, 180))
+        screen.blit(quit_button_img, (180, 350))
 
         pygame.display.update()
         clock.tick(30)
